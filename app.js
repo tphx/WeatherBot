@@ -33,8 +33,12 @@ function postWeather(msg) {
 
         if (result.length > 0) {
             const degreesC = Math.round((parseInt(result[0].current.temperature) - 32) * 5 / 9);
+            const splitWindDisplay = result[0].current.winddisplay.split(" ");
+            const windKph = Math.round(splitWindDisplay[0] * 1.609344);
             msg.reply(`The weather in ${result[0].location.name} is ${result[0].current.skytext}. It is currently ` +
                 `${result[0].current.temperature}${String.fromCharCode(176)} F / ${degreesC}${String.fromCharCode(176)} C.` +
+                ` Humidity is ${result[0].current.humidity}%.` +
+                ` Wind is ${splitWindDisplay[0]} mph / ${windKph} kph ${splitWindDisplay[2]}.` +
                 ` Taken at ${timeConvert(result[0].current.observationtime)} on ${dateConvert(result[0].current.date)}.`);
         } else {
             msg.reply(`Could not find weather for ${location}`);
